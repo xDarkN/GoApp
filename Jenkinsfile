@@ -15,35 +15,23 @@ pipeline {
             steps {
                 echo 'Installing dependencies'
                 sh 'go version'
-                sh 'go install golang.org/x/lint/golint@latest' // Install golint
-            }
-        }
-        stage('Initialize Module') {
-            steps {
-                echo 'Initializing Go module'
-                sh 'go mod init main'
-            }
-        }
-        stage('Build') {
-            steps {
-                echo 'Compiling and building'
-                sh 'go build'
             }
         }
         stage('Test') {
             steps {
-                echo 'Running vetting'
-                sh 'go vet .'
-                echo 'Running linting'
-                sh '/home/jenkins/go/bin/golint .' // Use the full path to golint binary
+                echo 'Running Tests!'
+                sh 'go mod init helloworld'
+                sh 'go test'
             }
         }
-        stage('RUN') {
+
+
+        stage('Build') {
             steps {
-            	echo 'Running Go app'
-            	sh 'go run main.go'
+                echo 'Compiling and building'
+                sh 'go build -o main'
             }
-	}
+        }
     }
 }
 
