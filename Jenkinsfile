@@ -1,21 +1,21 @@
-
 pipeline {
     agent {
         label 'my-go-agent'
-	}
+    }
     tools {
-        go 'GoLang-1.20.7'
+        go 'GoLang-1.20.7' // Make sure this matches the configured tool name
     }
     environment {
         GO114MODULE = 'on'
         CGO_ENABLED = 0 
-        GOPATH = "${JENKINS_HOME}/jobs/${JOB_NAME}/builds/${BUILD_ID}"
+        PATH = "${tool(name: 'GoLang-1.20.7', type: 'org.jenkinsci.plugins.golang.GolangInstallation').getHome()}/bin:${env.PATH}"
     }
     stages {        
         stage('Pre Test') {
             steps {
                 echo 'Installing dependencies'
                 sh 'go version'
+                sh 'go mod init' // Initialize a Go module
                 sh 'go get -u golang.org/x/lint/golint'
             }
         }
@@ -29,7 +29,7 @@ pipeline {
 
         stage('Test') {
             steps {
-                withEnv(["PATH+GO=${GOPATH}/bin"]){
+                withEnv(["PATH+GO=${WORKSPACE}/bin"]){
                     echo 'Running vetting'
                     sh 'go vet .'
                     echo 'Running linting'
@@ -42,3 +42,4 @@ pipeline {
         
     }  
 }
+
