@@ -30,8 +30,14 @@ pipeline {
             steps {
                 echo 'Compiling and building'
                 sh 'go build -o main'
+		}
+	}
+	
+	stage('Run') {
+            steps {
+                echo 'Running helloworld:'
+                sh './main' // Assuming the compiled binary is named 'main'
             }
         }
     }
 }
-
