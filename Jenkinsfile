@@ -35,8 +35,8 @@ pipeline {
                 echo 'Running vetting'
                 sh 'go vet .'
                 echo 'Running linting'
-                sh 'golint .'
-                echo 'Running test'
+                sh '/home/jenkins/go/bin/golint .' // Use the full path to golint binary
+                echo 'Running tests'
                 sh 'cd test && go test -v'
             }
         }
