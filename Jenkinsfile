@@ -17,12 +17,14 @@ pipeline {
         stage('Test') {
             steps {
                 // Run tests from main_test.go
+                echo "Test Stage!"
                 sh 'go test -v ./main_test.go'
             }
         }
 
         stage('Deploy') {
             steps {
+            	echo "Deploy Stage!"
                 sh './myapp'
             }
         }
