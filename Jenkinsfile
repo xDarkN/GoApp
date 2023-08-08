@@ -15,17 +15,15 @@ pipeline {
             steps {
                 echo 'Installing dependencies'
                 sh 'go version'
-                sh 'go get -u golang.org/x/lint/golint' // Install golint
+                sh 'go install golang.org/x/lint/golint@latest' // Install golint
             }
         }
-        
         stage('Initialize Module') {
             steps {
                 echo 'Initializing Go module'
                 sh 'go mod init yourmodule'
             }
         }
-        
         stage('Build') {
             steps {
                 echo 'Compiling and building'
