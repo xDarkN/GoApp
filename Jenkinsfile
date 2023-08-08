@@ -3,10 +3,20 @@ pipeline {
         label 'my-go-agent'
     }
     tools {
-        go '1.20.7' // Make sure this matches the configured tool name
+        go '1.20.7'
     }
-    stages {        
-        
+    stages {
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Pre Test') {
+            steps {
+                echo 'Installing dependencies'
+                sh 'go version'
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Compiling and building'
@@ -15,19 +25,14 @@ pipeline {
         }
         stage('Test') {
             steps {
-                withEnv(["PATH+GO=${WORKSPACE}/bin"]){
-                    echo 'Running vetting'
-                    sh 'go vet .'
-                    echo 'Running linting'
-                    sh 'golint .'
-                    echo 'Running test'
-                    sh 'cd test && go test -v'
-                }
+                echo 'Running vetting'
+                sh 'go vet .'
+                echo 'Running linting'
+                sh 'golint .'
+                echo 'Running test'
+                sh 'cd test && go test -v'
             }
-        }        
-        
-        
-}
-}
+        }
+    }
 }
 
