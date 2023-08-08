@@ -4,7 +4,7 @@ pipeline {
         label 'my-go-agent'
 	}
     tools {
-        go 'go1.20.7'
+        go 'GoLang'
     }
     environment {
         GO114MODULE = 'on'
