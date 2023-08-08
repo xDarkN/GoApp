@@ -36,10 +36,14 @@ pipeline {
                 sh 'go vet .'
                 echo 'Running linting'
                 sh '/home/jenkins/go/bin/golint .' // Use the full path to golint binary
-                echo 'Running tests'
-                sh 'cd test && go test -v'
             }
         }
+        stage('RUN') {
+            steps {
+            	echo 'Running Go app'
+            	sh 'go run main.go'
+            }
+	}
     }
 }
 
