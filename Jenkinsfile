@@ -1,6 +1,23 @@
 
 pipeline {
-    agent any
+    agent {
+        kubernetes {
+            // Define the pod template for the agent
+            node {
+                label 'my-go-agent'
+                // Specify the Docker image and container settings
+                podTemplate(
+                    label: 'my-go-agent',
+                    containers: [
+                        containerTemplate(name: 'go', image: 'golang:1.14', ttyEnabled: true)
+                    ],
+                    volumes: [/* add volumes if needed */]
+                ) {
+                    // Additional configuration for the pod template
+                }
+            }
+        }
+    }
     tools {
         go 'go1.14'
     }
@@ -49,4 +66,3 @@ pipeline {
         }
     }  
 }
-view rawJenkinsfile hosted with ❤ by GitHub
