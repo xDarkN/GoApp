@@ -17,7 +17,7 @@ pipeline {
         stage('Test') {
             steps {
                 // Run tests from main_test.go
-                sh 'go test -v -run TestHelloWorld ./...'
+                sh 'go test -v ./main_test.go'
             }
         }
 
