@@ -15,33 +15,22 @@ pipeline {
             steps {
                 echo 'Installing dependencies'
                 sh 'go version'
-                sh 'go install golang.org/x/lint/golint@latest' // Install golint
             }
         }
-        stage('Initialize Module') {
+       
+        stage('Test') {
             steps {
-                echo 'Initializing Go module'
-                sh 'go mod init main'
+		sh 'go mod init helloworld'
+                echo 'Running tests'
+                sh 'cd test && go test'
             }
         }
+        
         stage('Build') {
             steps {
                 echo 'Compiling and building'
-                sh 'go build'
+                sh 'go build -o main'
             }
         }
-	stage('Test') {
-            steps {
-                echo 'Running tests'
-                sh 'cd test && go test -v'
-            }
-        }
-
-        stage('RUN') {
-            steps {
-            	echo 'Running Go app'
-            	sh 'go run main.go'
-            }
-	}
     }
 }
