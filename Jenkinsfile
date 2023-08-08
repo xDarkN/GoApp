@@ -17,6 +17,14 @@ pipeline {
                 sh 'go version'
             }
         }
+        
+        stage('Initialize Module') {
+            steps {
+                echo 'Initializing Go module'
+                sh 'go mod init yourmodule'
+            }
+        }
+        
         stage('Build') {
             steps {
                 echo 'Compiling and building'
