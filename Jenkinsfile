@@ -21,7 +21,7 @@ pipeline {
         stage('Initialize Module') {
             steps {
                 echo 'Initializing Go module'
-                sh 'go mod init yourmodule'
+                sh 'go mod init main'
             }
         }
         stage('Build') {
